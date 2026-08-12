@@ -1,14 +1,13 @@
 import requests
 
-url = "https://brapi.dev/api/v2/stocks/historical"
+from Settings.config import BRAPI_TOKEN
 
-params = {
-    "symbols": "PETR4",
-    "range": "1mo",
-    "interval": "1d"
-}
+response = requests.get(
+    "https://brapi.dev/api/v2/stocks/quote?symbols=BBAS3",
+    headers={
+        "Authorization": f"Bearer {BRAPI_TOKEN}"
+    }
+)
 
-response = requests.get(url, params=params)
-
-print(response.status_code)
-print(response.json())
+data = response.json()
+print(data["results"][0]["data"])
