@@ -1,12 +1,16 @@
-from brapi import AsyncBrapi, DefaultAioHttpClient
+import requests
 
 from Settings.config import BRAPI_TOKEN
 
-def client_brapi() -> AsyncBrapi:
+def client_brapi():
     """
-    Criação do cliente da API Brapi
+    Cria uma sessão HTTP configurada para comunicação com a API Brapi.
     """
-    return AsyncBrapi(
-        api_key=BRAPI_TOKEN,
-        http_client=DefaultAioHttpClient()
-    )
+
+    session = requests.Session()
+
+    session.headers.update({
+        "Authorization": BRAPI_TOKEN
+    })
+
+    return session

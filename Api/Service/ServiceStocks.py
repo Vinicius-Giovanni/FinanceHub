@@ -1,22 +1,24 @@
-import asyncio
-from brapi import AsyncBrapi
-
+import requests
 class StockService:
 
-    def __init__(self, client: AsyncBrapi):
+    def __init__(self, client: requests.Session):
         self.client = client
 
-    async def get_quotes(self, tickers: str):
+    def get_quotes(self, tickers: str):
         """
-        Retorna as cotações dos tickers informados.
-
-        Exemplo:
-            tickers="PETR4"
-            tickers="PETR4, VALE3, ITUB4"
+        Retorna as cotações dos ativos informados
         """
 
-        quotes = await self.client.quote.retrieve(
-            tickers=tickers
+        response = self.client.get(
+            "https://brapi.dev/api/v2/stocks/quote",
+            params={
+                "symbols": tickers
+            }
         )
 
-        return quotes
+        response.raise_for_status()
+
+        return response.json()
+
+    def get_stocks(self,
+                   ):

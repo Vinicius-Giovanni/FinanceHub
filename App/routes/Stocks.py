@@ -9,10 +9,10 @@ router = APIRouter(
 )
 
 @router.get("/quote", response_model=StockResponse)
-async def get_quotes(request: Request, tickers: str):
+def get_quotes(request: Request, tickers: str):
 
     service = StockService(
         request.app.state.brapi
     )
 
-    return await service.get_quotes(tickers)
+    return service.get_quotes(tickers)

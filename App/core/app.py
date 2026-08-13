@@ -15,7 +15,8 @@ async def lifespan(app: FastAPI):
 
     yield
 
-    await app.state.brapi.close()
+    # Encerra a sessão HTTP
+    app.state.brapi.close()
 
 def create_app() -> FastAPI:
     """
