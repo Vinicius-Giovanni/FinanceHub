@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from Settings.paths import ENV_PATH
+from Backend.Settings.paths import ENV_PATH
 
 load_dotenv(dotenv_path=ENV_PATH)
 

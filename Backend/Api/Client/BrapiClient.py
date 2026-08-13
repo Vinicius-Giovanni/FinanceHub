@@ -1,6 +1,6 @@
 import requests
 
-from Settings.config import BRAPI_TOKEN
+from Backend.Settings.config import BRAPI_TOKEN
 
 def client_brapi():
     """

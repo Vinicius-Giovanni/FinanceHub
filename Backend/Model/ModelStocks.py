@@ -15,7 +15,8 @@ def to_camel(value: str) -> str:
     )
 
 
-class StockData(BaseModel):
+# Informações especificas de cada ação <--
+class QuoteData(BaseModel):
     """
     Representa os dados de mercado de uma ação retornados pela Brapi.
     """
@@ -53,7 +54,7 @@ class StockData(BaseModel):
     logourl: str | None = None
 
 
-class Stock(BaseModel):
+class Quote(BaseModel):
     """
     Representa o resultado de uma ação retornado pela Brapi.
     """
@@ -67,10 +68,10 @@ class Stock(BaseModel):
     symbol: str
     changed: bool
 
-    data: StockData
+    data: QuoteData
 
 
-class StockResponse(BaseModel):
+class QuoteResponse(BaseModel):
     """
     Representa a resposta da API de cotações da Brapi.
     """
@@ -81,6 +82,71 @@ class StockResponse(BaseModel):
     )
 
     requested_at: datetime
-    results: list[Stock]
+    results: list[Quote]
     took: int
     guidance: str | None = None
+
+# Informações históricas especificas de cada ação <--
+
+class HistoricalDataPrice(BaseModel):
+    """
+    Representa um ponto histórico de preço de uma ação.
+    """
+
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        populate_by_name=True,
+    )
+
+    date: int
+    open: float | None = None
+    high: float | None = None
+    low: float | None = None
+    close: float | None = None
+    volume: float | None = None
+    adjusted_close: float | None = None
+
+class HistoricalData(BaseModel):
+    """
+    Representa os dados históricos de uma ação.
+    """
+
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        populate_by_name=True,
+    )
+
+    used_interval: str
+    used_range: str
+
+    historical_data_price: list[HistoricalDataPrice]
+
+class HistoricalStock(BaseModel):
+    """
+    Representa o histórico de uma ação retornado pela Brapi.
+    """
+
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        populate_by_name=True,
+    )
+
+    requested_symbol: str
+    symbol: str
+    changed: bool
+
+    data: HistoricalData
+
+class HistoricalResponse(BaseModel):
+    """
+    Representa a resposta da API de histórico da Brapi.
+    """
+
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        populate_by_name=True,
+    )
+
+    requested_at: datetime
+    results: list[HistoricalStock]
+    took: int

@@ -1,8 +1,8 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
-from Api.Client.BrapiClient import client_brapi
-from App.routes.Stocks import router as stocks_router
+from Backend.Api.Client.BrapiClient import client_brapi
+from Backend.App.routes.Stocks import router as stocks_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
