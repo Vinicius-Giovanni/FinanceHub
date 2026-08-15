@@ -1,16 +1,26 @@
 import requests
 
-from Backend.Settings.config import BRAPI_TOKEN
+from Backend.Settings.config import BRAPI_TOKEN, BRAPI_URL
 
-def client_brapi():
+class BrapiClient:
     """
-    Cria uma sessão HTTP configurada para comunicação com a API Brapi.
+    Cliente HTTP para comunicação com a API Brapi.
     """
 
-    session = requests.Session()
+    def __init__(self):
+        self.base_url = BRAPI_URL
 
-    session.headers.update({
-        "Authorization": BRAPI_TOKEN
-    })
+        self.session = requests.Session()
 
-    return session
+        self.session.headers.update({
+            "Authorization": BRAPI_TOKEN
+        })
+
+    def get(self, endpoint: str, **kwargs):
+        """
+        Realiza uma requisição GET para a API Brapi
+        """
+        return self.session.get(
+            f"{self.base_url}{endpoint}",
+            **kwargs
+        )

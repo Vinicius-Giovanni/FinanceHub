@@ -1,7 +1,9 @@
 import requests
+
+from Backend.Api.Client.BrapiClient import BrapiClient
 class StockService:
 
-    def __init__(self, client: requests.Session):
+    def __init__(self, client: BrapiClient):
         self.client = client
 
     def get_quotes(self, tickers: str):
@@ -10,11 +12,8 @@ class StockService:
         """
 
         response = self.client.get(
-            "https://brapi.dev/api/v2/stocks/quote",
-            params={
-                "symbols": tickers
-            }
-        )
+            "quotes",
+            tickers)
 
         response.raise_for_status()
 
@@ -27,7 +26,7 @@ class StockService:
                    sort_order: str | None = None):
 
         response = self.client.get(
-            "https://brapi.dev/api/v2/stocks/historical",
+            "historical",
             params={
                 "symbols": symbols,
                 "range":range,
