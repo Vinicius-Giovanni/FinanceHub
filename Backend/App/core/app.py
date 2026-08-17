@@ -1,8 +1,11 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
-from Backend.Api.Client.BrapiClient import client_brapi
+from Backend.Api.Client.BrapiClient import BrapiClient
+from Backend.Api.Client.CoinGeckoClient import CoinGeckoClient
+
 from Backend.App.routes.Stocks import router as stocks_router
+from Backend.App.routes.Crypto import router as crypto_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -10,13 +13,15 @@ async def lifespan(app: FastAPI):
     Gerenciador do ciclo de vida das chamadas de API's
     """
 
-    # Brapi
-    app.state.brapi = client_brapi()
+    # Clientes das APIs
+    app.state.brapi = BrapiClient()
+    app.state.coingecko = CoinGeckoClient()
 
     yield
 
-    # Encerra a sessão HTTP
-    app.state.brapi.close()
+    # Encerra as sessões HTTP
+    app.state.brapi.session.close()
+    app.state.coingecko.session.close()
 
 def create_app() -> FastAPI:
     """
@@ -30,5 +35,6 @@ def create_app() -> FastAPI:
     )
 
     app.include_router(stocks_router)
+    app.include_router(crypto_router)
 
     return app

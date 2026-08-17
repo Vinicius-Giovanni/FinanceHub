@@ -8,12 +8,13 @@ class StockService:
 
     def get_quotes(self, tickers: str):
         """
-        Retorna as cotações dos ativos informados
+        Retorna as cotações dos ativos informados.
         """
 
         response = self.client.get(
-            "quotes",
-            tickers)
+            "quote",
+            params={"symbols": tickers}
+        )
 
         response.raise_for_status()
 
