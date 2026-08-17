@@ -13,3 +13,5 @@ COINGECKO_URL = "https://api.coingecko.com/api/v3/"
 
 TWELVE_TOKEN = os.getenv("TWELVE_TOKEN")
 TWELVE_URL = "https://api.twelvedata.com/"
+
+ALTERNATIVE_URL = "https://api.alternative.me/fng/"
