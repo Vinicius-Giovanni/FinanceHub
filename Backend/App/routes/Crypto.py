@@ -15,9 +15,13 @@ def get_prices(
     vs_currencies: str = "usd"
 ):
     """
-    Retorna os preços das criptomoedas informadas.
+
+    Params:
+        ids: Retorna os preços das criptomoedas informadas.
+        vs_currencies: A moeda que será mostrada o valor da criptomoeda: usd, brl, eur
 
     Exemplo:
+    bitcoin, ethereum
     /api/crypto/prices?ids=bitcoin,ethereum&vs_currencies=usd,brl
     """
 
@@ -41,6 +45,11 @@ def get_historical(
     Retorna o histórico de preço de uma criptomoeda.
     A granularidade é definida automaticamente pela CoinGecko
     de acordo como período informado.
+
+    Params:
+        coin_id: bitcoin, ethereum
+        days: dias de histórico: 1, 30, 60, 90
+        vs_currency: us, brl, eur
     """
 
     service = CryptoService(

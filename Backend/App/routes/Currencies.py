@@ -42,6 +42,8 @@ def get_historical(
     1min, 5min, 15min, 30min, 45min,
     1h, 2h, 4h, 8h,
     1day, 1week, 1month
+
+    outputsize: dias de histórico retornado: 1 , 30, 60, 90
     """
 
     service = CurrencyService(

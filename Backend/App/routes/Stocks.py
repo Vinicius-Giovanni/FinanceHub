@@ -10,7 +10,12 @@ router = APIRouter(
 
 @router.get("/quote", response_model=QuoteResponse)
 def get_quotes(request: Request, tickers: str):
-
+    """
+    Params:
+        tickers: Simbolos das ações
+    Exemplas:
+    PETR4, AAPL, VALE3
+    """
     service = StockService(
         request.app.state.brapi
     )
@@ -26,7 +31,11 @@ def get_historical(
     sort_order: str | None = None,
 ):
     """
-    Ranges permitidos: 1d, 5d, 1mo, 3mo
+    Params:
+        symbols das ações: PETR4, AAPL, VALE3
+        range permitidos: 1d, 5d, 1mo, 3mo
+        interval, ele retorna um padrão de intervalo mas você pode inputar: 5m, 15m, 30m, 1h, 1d, 5d, 1wk, 1mo, 3mo
+        sort_order, ordem da organização: asc, desc
     """
     service = StockService(
         request.app.state.brapi

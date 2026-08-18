@@ -17,9 +17,11 @@ def get_fear_and_greed(
     Retorna o Fear and Greed Index.
 
     Por padrão, retorna o índice atual.
+
+    limit: retorna o histórico de infos: 1, 2, 30, 60, 90
     """
 
-    service = FearAndGreedResponse(
+    service = AlternativeService(
         request.app.state.alternative
     )
 

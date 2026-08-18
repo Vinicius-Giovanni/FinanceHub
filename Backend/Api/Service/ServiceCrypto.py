@@ -1,4 +1,5 @@
 from Backend.Api.Client.CoinGeckoClient import CoinGeckoClient
+from Backend.Model.ModelCrypto import HistoricalPoint, HistoricalResponse
 
 class CryptoService:
 
@@ -31,7 +32,7 @@ class CryptoService:
             coin_id: str,
             days: int | str = 30,
             vs_currency: str = "usd",
-    ):
+    ) -> HistoricalResponse:
         """
         Retorna o hitórico de preços de uma criptomoeda.
         """
@@ -46,4 +47,16 @@ class CryptoService:
 
         response.raise_for_status()
 
-        return response.json()
+        data = response.json()
+
+        prices = [
+            HistoricalPoint(
+                timestamp=timestamp,
+                value=value
+            )
+            for timestamp, value in data['prices']
+        ]
+
+        return HistoricalResponse(
+            prices=prices
+        )
