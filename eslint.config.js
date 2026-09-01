@@ -18,5 +18,9 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      //Route definitions and shadc-style primitive exports intentionally share modules.
+      "react-refresh/only-export-components": "off",
+    }
   },
 ])

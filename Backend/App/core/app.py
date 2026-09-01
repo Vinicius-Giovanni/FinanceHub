@@ -26,10 +26,10 @@ async def lifespan(app: FastAPI):
     yield
 
     # Encerra as sessões HTTP
-    app.state.brapi.session.close()
-    app.state.coingecko.session.close()
-    app.state.twelve_data.session.close()
-    app.state.alternative.session.close()
+    app.state.brapi.close()
+    app.state.coingecko.close()
+    app.state.twelve_data.close()
+    app.state.alternative.close()
 
 def create_app() -> FastAPI:
     """

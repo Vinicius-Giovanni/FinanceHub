@@ -1,5 +1,3 @@
-import requests
-
 from Backend.Api.Client.BrapiClient import BrapiClient
 class StockService:
 

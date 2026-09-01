@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { NewsCard } from "@/components/finance/NewsCard";
-import { EmptyState } from "@/components/states/States";
+import { EmptyState } from "@/components/state/States";
 import { Skeleton } from "@/components/ui/skeleton";
 import { newsCategories, newsItems } from "@/mock/news";
 import { cn } from "@/lib/utils";
@@ -67,7 +67,6 @@ function NewsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     const timer = window.setTimeout(() => setLoading(false), 420);
     return () => window.clearTimeout(timer);
   }, [category]);
@@ -87,7 +86,10 @@ function NewsPage() {
         {["All", ...newsCategories].map((cat) => (
           <button
             key={cat}
-            onClick={() => setCategory(cat)}
+            onClick={() => {
+              setLoading(true);
+              setCategory(cat);
+            }}
             className={cn(
               "shrink-0 rounded-full border px-4 py-1.5 text-xs font-medium transition-colors",
               category === cat

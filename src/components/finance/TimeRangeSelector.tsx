@@ -1,26 +1,16 @@
-import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { PriceChange } from "./PriceChange";
+import type { Range } from "@/mock/series";
 
-interface StatCardProps {
-  label: string;
-  value: ReactNode;
-  change?: number;
-  hint?: string;
-  className?: string;
-}
+const ranges: Range[] = ['1D', '1W', '1M', '3M', '1Y'];
 
-export function StatCard({ label, value, change, hint, className }: StatCardProps) {
+export function TimeRangeSelector({ value, onChange }: { value: Range; onChange: (range: Range) => void}) {
   return (
-    <div className={cn("panel p-4 transition-colors hover:border-primary/30", className)}>
-      <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-        {label}
-      </p>
-      <p className="num mt-2 text-lg font-semibold text-foreground sm:text-xl">{value}</p>
-      <div className="mt-1 flex items-center gap-2">
-        {change !== undefined && <PriceChange value={change} />}
-        {hint && <span className="text-xs text-muted-foreground">{hint}</span>}
-      </div>
+    <div className="flex rounded-lg border border-border bg-surface/60 p-1" aria-label="Chart range">
+      {ranges.map((range) => (
+        <button key={range} type="button" onClick={() => onChange(range)} className={cn("rounded-md px-2 py-1 text-xs", value === range ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground")}>
+          {range}
+        </button>
+      ))}
     </div>
   );
 }
