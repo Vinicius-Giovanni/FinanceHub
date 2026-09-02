@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { defaultWatchlist } from "@/mock/assets";
 
 /**
  * Contexto e hook para gerenciament oda watchlist de ativos do FinanceHub.
