@@ -3,7 +3,7 @@ import { Star, X } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { AssetTable } from "@/components/finance/AssetTable";
 import { MarketCard } from "@/components/finance/MarketCard";
-import { EmptyState } from "@/components/states/States";
+import { EmptyState } from "@/components/state/States";
 import { getAsset } from "@/mock/assets";
 import { useWatchlist } from "@/lib/watchlist";
 import { Button } from "@/components/ui/button";

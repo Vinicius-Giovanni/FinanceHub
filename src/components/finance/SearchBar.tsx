@@ -6,30 +6,24 @@ import type { Asset } from "@/mock/types";
 import { formatPrice } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { PriceChange } from "./PriceChange";
-import { NoResultsState } from "@/components/states/States";
+import { NoResultsState } from "@/components/state/States";
 
 export function SearchBar({ className }: { className?: string }) {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState<Asset[]>([]);
+  const [results, setResults] = useState<Asset[] | null>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!query.trim()) {
-      setResults([]);
-      setLoading(false);
-      return;
-    }
-    setLoading(true);
+    if (!query.trim()) return;
     // Simulated network latency — swap for the real API call later.
-    const timer = window.setTimeout(() => {
-      setResults(searchAssets(query));
-      setLoading(false);
-    }, 260);
+    const timer = window.setTimeout(() => setResults(searchAssets(query)), 260);
     return () => window.clearTimeout(timer);
   }, [query]);
+
+  const hasQuery = query.trim().length > 0;
+  const loading = hasQuery && results === null;
 
   useEffect(() => {
     function onClick(event: MouseEvent) {
@@ -53,6 +47,7 @@ export function SearchBar({ className }: { className?: string }) {
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
+            setResults(null);
             setOpen(true);
           }}
           onFocus={() => setOpen(true)}
@@ -71,7 +66,7 @@ export function SearchBar({ className }: { className?: string }) {
                 <div key={i} className="h-11 animate-pulse rounded-lg bg-accent/60" />
               ))}
             </div>
-          ) : results.length === 0 ? (
+          ) : !results || results.length === 0 ? (
             <NoResultsState query={query} />
           ) : (
             <ul>

@@ -24,3 +24,7 @@ class BrapiClient:
             f"{self.base_url}{endpoint}",
             **kwargs
         )
+
+    def close(self):
+        """Encerra a sessão HTTP."""
+        self.session.close()

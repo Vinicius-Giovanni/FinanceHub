@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { defaultWatchlist } from "@/mock/assets";
 
 /**
  * Contexto e hook para gerenciament oda watchlist de ativos do FinanceHub.
@@ -55,16 +56,14 @@ const WatchlistContext = createContext<WatchlistValue | null>(null);
  * @returns Provider responsável por disponibilizar o WatchlistContext.
  */
 export function WatchlistProvider({ children }: { children: ReactNode }) {
-  const [ids, setIds] = useState<string[]>(defaultWatchlist);
-
-  useEffect(() => {
+  const [ids, setIds] = useState<string[]>(() => {
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (stored) setIds(JSON.parse(stored) as string[]);
+      return stored ? JSON.parse(stored) as string[] : defaultWatchlist;
     } catch {
-      /* ignore storage errors */
+      return defaultWatchlist;
     }
-  }, []);
+  });
 
   useEffect(() => {
     try {

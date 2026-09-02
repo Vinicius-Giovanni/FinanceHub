@@ -6,7 +6,7 @@ import { MarketChart } from "@/components/finance/MarketChart";
 import { PriceChange } from "@/components/finance/PriceChange";
 import { StatCard } from "@/components/finance/StatCard";
 import { TimeRangeSelector } from "@/components/finance/TimeRangeSelector";
-import { ErrorState } from "@/components/states/States";
+import { ErrorState } from "@/components/state/States";
 import { Button } from "@/components/ui/button";
 import { getAsset } from "@/mock/assets";
 import type { Range } from "@/mock/series";

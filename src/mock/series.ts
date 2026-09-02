@@ -1,0 +1,2 @@
+export type Range = "1D" | "1W" | "1M" | "3M" | "1Y";
+export function generateSeries(seriesKey: string, price: number, range: Range) { const points = range === "1D" ? 24 : range === "1W" ? 7 : range === "1M" ? 30 : range === "3M" ? 90 : 365; const now = Date.now(); const step = range === "1D" ? 3_600_000 : 86_400_000; const offset = seriesKey.length * 0.002; return Array.from({ length: points }, (_, index) => ({ t: new Date(now - (points - index) * step).toISOString(), v: price * (0.96 + (index / points) * .08 + Math.sin(index * .7 + offset) * .015) })); }
