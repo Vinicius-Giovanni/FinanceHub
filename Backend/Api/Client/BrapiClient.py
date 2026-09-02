@@ -26,5 +26,6 @@ class BrapiClient:
         )
 
     def close(self):
-        """Encerra a sessão HTTP."""
+        """
+        Encerra a sessão HTTP."""
         self.session.close()
